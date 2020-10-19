@@ -41,7 +41,6 @@ dependencies {
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.2'
-//    implementation 'com.google.firebase:firebase-database:19.5.0'
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
@@ -54,8 +53,11 @@ dependencies {
     implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
     // Gson
     implementation 'com.google.code.gson:gson:2.8.6'
-
     implementation "com.squareup.okhttp3:logging-interceptor:4.8.1"
+
+    implementation 'me.ibrahimyilmaz:kiel:1.2.1'
+
+    implementation 'com.github.ybq:Android-SpinKit:1.4.0'
 
 }
 
