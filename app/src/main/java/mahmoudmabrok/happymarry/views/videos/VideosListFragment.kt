@@ -3,8 +3,8 @@ package mahmoudmabrok.happymarry.views.videos
 
 import android.view.View
 import android.widget.Toast
+import androidx.fragment.app.activityViewModels
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_movies_list.*
 import mahmoudmabrok.happymarry.R
@@ -14,26 +14,22 @@ import mahmoudmabrok.happymarry.dataLayer.models.Video
 import mahmoudmabrok.happymarry.dataLayer.models.VideoListItem
 import mahmoudmabrok.happymarry.util.Logger
 import mahmoudmabrok.happymarry.viewholders.VideoVH
+import mahmoudmabrok.happymarry.viewmodels.VideoListViewmodel
 import mahmoudmabrok.happymarry.views.videoDetail.VideoDetailFragment
 import me.ibrahimyilmaz.kiel.adapterOf
-import me.ibrahimyilmaz.kiel.core.RecyclerViewHolder
 
 
 class VideosListFragment : BaseFragment(R.layout.fragment_movies_list) {
 
-    private var recyclerViewAdapter: androidx.recyclerview.widget.ListAdapter<VideoListItem, RecyclerViewHolder<VideoListItem>>? =
-        null
-    private val repo by lazy { AppRepo() }
-    val bag = CompositeDisposable()
-
-    override fun initViews() {
-        recyclerViewAdapter = adapterOf {
+    private val recyclerViewAdapter by lazy {
+        adapterOf<VideoListItem> {
             register(
                 layoutResource = R.layout.item_video,
                 viewHolder = ::VideoVH,
                 onViewHolderCreated = { vh ->
                     Logger.log("v1 ${vh.data}")
                     vh.itemView.setOnClickListener {
+                        model.lsitintem = vh.data
                         show(VideoDetailFragment())
                     }
                 },
@@ -43,6 +39,12 @@ class VideosListFragment : BaseFragment(R.layout.fragment_movies_list) {
             )
 
         }
+    }
+    private val repo by lazy { AppRepo() }
+
+    val model by activityViewModels<VideoListViewmodel>()
+
+    override fun initViews() {
 
         rvItems?.adapter = recyclerViewAdapter
     }

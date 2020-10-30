@@ -1,7 +1,8 @@
 <resources>
     <string name="app_name">HappyMarry</string>
     <string name="videos">فيديوهات</string>
-    <string name="articls">مقالات</string>
+    <string name="articls">منوعات</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="splashtext">من أجل عفاف اجتماعى</string>
 </resources>

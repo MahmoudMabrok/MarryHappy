@@ -1,5 +1,6 @@
 package mahmoudmabrok.happymarry.views.videoDetail
 
+import androidx.fragment.app.activityViewModels
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.android.synthetic.main.fragment_video_detail.*
@@ -7,24 +8,15 @@ import kotlinx.android.synthetic.main.rv_detail_video_item.view.*
 import mahmoudmabrok.happymarry.R
 import mahmoudmabrok.happymarry.base.BaseFragment
 import mahmoudmabrok.happymarry.dataLayer.models.Video
-import mahmoudmabrok.happymarry.dataLayer.models.VideoListItem
 import mahmoudmabrok.happymarry.util.Logger
 import mahmoudmabrok.happymarry.viewholders.VideoDetailVH2
+import mahmoudmabrok.happymarry.viewmodels.VideoListViewmodel
 import me.ibrahimyilmaz.kiel.adapterOf
 
 
 class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
 
-    val items = VideoListItem(
-        items = listOf(
-            Video(name = "aaa", url = "sQVIAwasmQ4"),
-            Video(name = "bbb", url = "sQVIAwasmQ4"),
-            Video(name = "bbb", url = "sQVIAwasmQ4"),
-            Video(name = "bbb", url = "sQVIAwasmQ4"),
-            Video(name = "bbb", url = "sQVIAwasmQ4"),
-            Video(name = "bbb", url = "sQVIAwasmQ4")
-        )
-    )
+    val model by activityViewModels<VideoListViewmodel>()
 
     val adapter = adapterOf<Video> {
         register(
@@ -37,7 +29,8 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
                         AbstractYouTubePlayerListener() {
                         override fun onReady(initializedYouTubePlayer: YouTubePlayer) {
                             vh.player = initializedYouTubePlayer
-                            vh.player?.cueVideo(vh.data?.url ?: "", 0f)
+                            val newUrl = vh.data?.url?.split("=")?.lastOrNull() ?: ""
+                            vh.player?.cueVideo(newUrl, 0f)
                         }
                     })
                 }
@@ -53,7 +46,7 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
 
         android.os.Handler().postDelayed({
             Logger.log("VideoDetailFragment initViews: ")
-            adapter.submitList(items.items)
+            adapter.submitList(model.lsitintem?.items)
         }, 200)
 
     }

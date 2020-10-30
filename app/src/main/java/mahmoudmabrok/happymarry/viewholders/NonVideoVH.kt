@@ -2,13 +2,13 @@ package mahmoudmabrok.happymarry.viewholders
 
 import android.view.View
 import kotlinx.android.synthetic.main.item_video.view.*
-import mahmoudmabrok.happymarry.dataLayer.models.Video
+import mahmoudmabrok.happymarry.dataLayer.models.NonVideo
 import me.ibrahimyilmaz.kiel.core.RecyclerViewHolder
 
-class VideoVH2(view: View) : RecyclerViewHolder<Video>(view) {
-    var data: Video? = null
+class NonVideoVH(view: View) : RecyclerViewHolder<NonVideo>(view) {
+    var data: NonVideo? = null
 
-    fun bind(item: Video) {
+    fun bind(item: NonVideo) {
         data = item
         itemView.tvTitle?.text = item.name
     }

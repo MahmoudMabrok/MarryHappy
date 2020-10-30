@@ -1,6 +1,7 @@
 package mahmoudmabrok.happymarry.dataLayer
 
 import io.reactivex.Single
+import mahmoudmabrok.happymarry.dataLayer.models.NonVideosResponse
 import mahmoudmabrok.happymarry.dataLayer.models.VideosResponse
 
 class AppRepo : AppService {
@@ -9,6 +10,10 @@ class AppRepo : AppService {
 
     override fun loadVideos(): Single<VideosResponse> {
         return api.loadVideos()
+    }
+
+    override fun loadNonVideos(): Single<NonVideosResponse> {
+        return api.loadNonVideos()
     }
 
 }
