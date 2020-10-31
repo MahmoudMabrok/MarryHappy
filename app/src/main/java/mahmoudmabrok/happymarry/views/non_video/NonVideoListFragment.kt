@@ -6,6 +6,9 @@ import androidx.fragment.app.activityViewModels
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_articles_list.*
+import kotlinx.android.synthetic.main.fragment_articles_list.rvItems
+import kotlinx.android.synthetic.main.fragment_articles_list.swip
+import kotlinx.android.synthetic.main.fragment_movies_list.*
 import mahmoudmabrok.happymarry.R
 import mahmoudmabrok.happymarry.base.BaseFragment
 import mahmoudmabrok.happymarry.dataLayer.AppRepo
@@ -52,14 +55,24 @@ class NonVideoListFragment : BaseFragment(R.layout.fragment_articles_list) {
                 Logger.log("data ${it.size}")
                 handleData(it)
                 spLoading.visibility = View.GONE
+                swip.isRefreshing = false
             }, {
                 Logger.log("Error ${it.message}")
-                spLoading.visibility = View.GONE
-                Toast.makeText(requireContext(), "حدث خطأ", Toast.LENGTH_SHORT).show()
+                handleError(it.message)
             })
             .also {
                 bag.add(it)
             }
+    }
+
+    private fun handleError(message: String?) {
+        Logger.log("Error $message")
+        spVideos.visibility = View.GONE
+        if (message?.contains("resolve") == true) {
+            Toast.makeText(requireContext(), "تاكد من اتصالك بالانترنت", Toast.LENGTH_SHORT).show()
+        } else
+            Toast.makeText(requireContext(), "حدث خطأ", Toast.LENGTH_SHORT).show()
+        swip.isRefreshing = false
     }
 
     private fun handleData(it: NonVideosResponse?) {

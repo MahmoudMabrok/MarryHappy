@@ -45,8 +45,12 @@ class VideosListFragment : BaseFragment(R.layout.fragment_movies_list) {
     val model by activityViewModels<VideoListViewmodel>()
 
     override fun initViews() {
-
         rvItems?.adapter = recyclerViewAdapter
+
+        swip.setOnRefreshListener {
+            if (swip.isRefreshing)
+                loadData()
+        }
     }
 
     override fun loadData() {
@@ -55,22 +59,30 @@ class VideosListFragment : BaseFragment(R.layout.fragment_movies_list) {
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                Logger.log("data ${it.size}")
+                swip.isRefreshing = false
                 handleData(it)
             }, {
-                Logger.log("Error ${it.message}")
-                spVideos.visibility = View.GONE
-                Toast.makeText(requireContext(), "حدث خطأ", Toast.LENGTH_SHORT).show()
+                handleError(it.message)
             })
             .also {
                 bag.add(it)
             }
     }
 
+    private fun handleError(message: String?) {
+        Logger.log("Error $message")
+        spVideos.visibility = View.GONE
+        if (message?.contains("resolve") == true) {
+            Toast.makeText(requireContext(), "تاكد من اتصالك بالانترنت", Toast.LENGTH_SHORT).show()
+        } else
+            Toast.makeText(requireContext(), "حدث خطأ", Toast.LENGTH_SHORT).show()
+        swip.isRefreshing = false
+    }
+
     private fun handleData(videos: List<Video>?) {
         spVideos?.visibility = View.GONE
         videos?.let {
-            recyclerViewAdapter?.submitList(mapMoves(videos))
+            recyclerViewAdapter.submitList(mapMoves(videos))
         }
     }
 

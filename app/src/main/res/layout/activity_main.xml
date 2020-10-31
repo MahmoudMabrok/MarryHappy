@@ -20,10 +20,9 @@
         app:tabIndicatorColor="@color/teal_700"
         app:tabIndicatorGravity="bottom"
         app:tabIndicatorHeight="4dp"
-        app:tabSelectedTextColor="@color/white"
-        app:tabTextColor="#4CAF50" />
-    <!--        app:tabTextAppearance="@style/nav"-->
-    <!--       -->
+        android:layoutDirection="rtl"
+        app:tabSelectedTextColor="#121211"
+        app:tabTextColor="#6C6767" />
 
 
     <androidx.viewpager.widget.ViewPager

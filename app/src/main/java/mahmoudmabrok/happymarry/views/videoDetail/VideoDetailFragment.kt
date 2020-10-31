@@ -9,6 +9,7 @@ import mahmoudmabrok.happymarry.R
 import mahmoudmabrok.happymarry.base.BaseFragment
 import mahmoudmabrok.happymarry.dataLayer.models.Video
 import mahmoudmabrok.happymarry.util.Logger
+import mahmoudmabrok.happymarry.util.getID
 import mahmoudmabrok.happymarry.viewholders.VideoDetailVH2
 import mahmoudmabrok.happymarry.viewmodels.VideoListViewmodel
 import me.ibrahimyilmaz.kiel.adapterOf
@@ -29,7 +30,7 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
                         AbstractYouTubePlayerListener() {
                         override fun onReady(initializedYouTubePlayer: YouTubePlayer) {
                             vh.player = initializedYouTubePlayer
-                            val newUrl = vh.data?.url?.split("=")?.lastOrNull() ?: ""
+                            val newUrl = vh.data?.url?.getID() ?: ""
                             vh.player?.cueVideo(newUrl, 0f)
                         }
                     })
