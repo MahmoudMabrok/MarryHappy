@@ -1,6 +1,7 @@
 package mahmoudmabrok.happymarry.views.videoDetail
 
 import androidx.fragment.app.activityViewModels
+import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.android.synthetic.main.fragment_video_detail.*
@@ -32,6 +33,14 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
                             vh.player = initializedYouTubePlayer
                             val newUrl = vh.data?.url?.getID() ?: ""
                             vh.player?.cueVideo(newUrl, 0f)
+                        }
+
+                        override fun onError(
+                            youTubePlayer: YouTubePlayer,
+                            error: PlayerConstants.PlayerError
+                        ) {
+                            super.onError(youTubePlayer, error)
+                            Logger.log("VideoDetailFragment onError: ${error.name}  $error")
                         }
                     })
                 }

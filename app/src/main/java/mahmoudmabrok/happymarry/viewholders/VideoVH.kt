@@ -11,5 +11,6 @@ class VideoVH(view: View) : RecyclerViewHolder<VideoListItem>(view) {
     fun bind(item: VideoListItem) {
         data = item
         itemView.tvTitle?.text = item.title
+        itemView.tvCount?.text = item.items?.size.toString()
     }
 }

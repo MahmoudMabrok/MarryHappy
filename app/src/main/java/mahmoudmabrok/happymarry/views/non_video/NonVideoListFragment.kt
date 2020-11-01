@@ -43,6 +43,11 @@ class NonVideoListFragment : BaseFragment(R.layout.fragment_articles_list) {
 
     override fun initViews() {
         rvItems?.adapter = adapter
+        swip.setOnRefreshListener {
+            if (swip.isRefreshing)
+                loadData()
+        }
+
     }
 
     override fun loadData() {
