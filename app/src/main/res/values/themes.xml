@@ -17,4 +17,12 @@
     <style name="tab">
         <item name="fontFamily">@font/ge_medium</item>
     </style>
+
+    <style name="frame" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
+        <item name="fontFamily">@font/ge_bold</item>
+        <item name="color">@color/white</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:layout_weight">1</item>
+        <item name="autoSizeTextType">uniform</item>
+    </style>
 </resources>

@@ -13,16 +13,17 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="#FFC107"
+        android:layoutDirection="rtl"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_scrollFlags="scroll|enterAlways"
         app:tabGravity="fill"
-        app:tabIndicatorColor="@color/teal_700"
-        app:tabIndicatorGravity="bottom"
+        app:tabIndicatorColor="#F57F17"
+        app:tabIndicatorGravity="stretch"
         app:tabIndicatorHeight="4dp"
-        android:layoutDirection="rtl"
-        app:tabSelectedTextColor="#121211"
-        app:tabTextColor="#6C6767" />
+        app:tabSelectedTextColor="@color/white"
+        app:tabTextAppearance="@style/frame"
+        app:tabTextColor="#121211" />
 
 
     <androidx.viewpager.widget.ViewPager

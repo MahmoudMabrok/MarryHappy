@@ -24,10 +24,9 @@ class VideosListFragment : BaseFragment(R.layout.fragment_movies_list) {
     private val recyclerViewAdapter by lazy {
         adapterOf<VideoListItem> {
             register(
-                layoutResource = R.layout.item_video,
+                layoutResource = R.layout.item_video_card,
                 viewHolder = ::VideoVH,
                 onViewHolderCreated = { vh ->
-                    Logger.log("v1 ${vh.data}")
                     vh.itemView.setOnClickListener {
                         model.lsitintem = vh.data
                         show(VideoDetailFragment())

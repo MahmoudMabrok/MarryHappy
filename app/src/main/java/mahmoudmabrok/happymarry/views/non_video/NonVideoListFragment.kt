@@ -14,10 +14,10 @@ import mahmoudmabrok.happymarry.base.BaseFragment
 import mahmoudmabrok.happymarry.dataLayer.AppRepo
 import mahmoudmabrok.happymarry.dataLayer.models.NonVideo
 import mahmoudmabrok.happymarry.dataLayer.models.NonVideosResponse
+import mahmoudmabrok.happymarry.util.IntentHelper
 import mahmoudmabrok.happymarry.util.Logger
 import mahmoudmabrok.happymarry.viewholders.NonVideoVH
 import mahmoudmabrok.happymarry.viewmodels.VideoListViewmodel
-import mahmoudmabrok.happymarry.views.nonVideoDetails.NonVideoDetailFragment
 import me.ibrahimyilmaz.kiel.adapterOf
 
 class NonVideoListFragment : BaseFragment(R.layout.fragment_articles_list) {
@@ -29,8 +29,8 @@ class NonVideoListFragment : BaseFragment(R.layout.fragment_articles_list) {
             viewHolder = ::NonVideoVH,
             onViewHolderCreated = { vh ->
                 vh.itemView.setOnClickListener {
-                    model.nonVideoItem = vh.data
-                    show(NonVideoDetailFragment())
+                    // model.nonVideoItem = vh.data
+                    IntentHelper.openUrl(requireContext(), vh.data?.url)
                 }
             },
             onBindViewHolder = { vh: NonVideoVH, pos: Int, p: NonVideo ->
