@@ -15,4 +15,4 @@ Android App to list reources for Islamic Marry.
 
 
 # Apk 
-[Click To downloaad](https://bit.ly/2GbCxuP)
+[Click To downloaad](https://bit.ly/32jn8QW)
