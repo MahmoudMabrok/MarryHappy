@@ -18,9 +18,9 @@ import me.ibrahimyilmaz.kiel.adapterOf
 
 class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
 
-    val model by activityViewModels<VideoListViewmodel>()
+    private val model by activityViewModels<VideoListViewmodel>()
 
-    val adapter = adapterOf<Video> {
+    private val adapter = adapterOf<Video> {
         register(
             layoutResource = R.layout.rv_detail_video_item,
             viewHolder = ::VideoDetailVH2,
@@ -53,13 +53,6 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
 
     override fun initViews() {
         rvItems?.adapter = adapter
-
-        android.os.Handler().postDelayed({
-            Logger.log("VideoDetailFragment initViews: ")
-            adapter.submitList(model.lsitintem?.items)
-        }, 200)
-
+        adapter.submitList(model.lsitintem?.items)
     }
-
-
 }
