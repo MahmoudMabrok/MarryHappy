@@ -1,6 +1,8 @@
 package mahmoudmabrok.happymarry.views.videoDetail
 
 import androidx.fragment.app.activityViewModels
+import com.google.android.material.transition.MaterialFadeThrough
+import com.google.android.material.transition.MaterialSharedAxis
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
 import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
@@ -54,5 +56,7 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
     override fun initViews() {
         rvItems?.adapter = adapter
         adapter.submitList(model.lsitintem?.items)
+        enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
+        exitTransition = MaterialFadeThrough()
     }
 }

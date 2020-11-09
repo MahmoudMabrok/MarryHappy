@@ -8,7 +8,7 @@
     android:clipToPadding="false"
     android:layoutDirection="rtl"
     android:padding="4dp"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="12dp"
     app:cardElevation="4dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
