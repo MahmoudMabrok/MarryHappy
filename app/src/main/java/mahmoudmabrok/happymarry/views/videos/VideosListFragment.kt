@@ -14,7 +14,7 @@ import mahmoudmabrok.happymarry.dataLayer.models.Video
 import mahmoudmabrok.happymarry.dataLayer.models.VideoListItem
 import mahmoudmabrok.happymarry.util.Logger
 import mahmoudmabrok.happymarry.viewholders.VideoVH
-import mahmoudmabrok.happymarry.viewmodels.VideoListViewmodel
+import mahmoudmabrok.happymarry.viewmodels.VideoListViewModel
 import mahmoudmabrok.happymarry.views.videoDetail.VideoDetailFragment
 import me.ibrahimyilmaz.kiel.adapterOf
 
@@ -28,7 +28,7 @@ class VideosListFragment : BaseFragment(R.layout.fragment_movies_list) {
                 viewHolder = ::VideoVH,
                 onViewHolderCreated = { vh ->
                     vh.itemView.setOnClickListener {
-                        model.lsitintem = vh.data
+                        model.listItem = vh.data
                         show(VideoDetailFragment())
                     }
                 },
@@ -41,24 +41,26 @@ class VideosListFragment : BaseFragment(R.layout.fragment_movies_list) {
     }
     private val repo by lazy { AppRepo() }
 
-    val model by activityViewModels<VideoListViewmodel>()
+    private val model by activityViewModels<VideoListViewModel>()
 
     override fun initViews() {
         rvItems?.adapter = recyclerViewAdapter
 
-        swip.setOnRefreshListener {
-            if (swip.isRefreshing)
+        swipeLayout.setOnRefreshListener {
+            if (swipeLayout.isRefreshing)
                 loadData()
         }
+
     }
 
     override fun loadData() {
+        recyclerViewAdapter.submitList(emptyList())
         spVideos.visibility = View.VISIBLE
         repo.loadVideos()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                swip.isRefreshing = false
+                swipeLayout.isRefreshing = false
                 handleData(it)
             }, {
                 handleError(it.message)
@@ -75,14 +77,17 @@ class VideosListFragment : BaseFragment(R.layout.fragment_movies_list) {
             Toast.makeText(requireContext(), "تاكد من اتصالك بالانترنت", Toast.LENGTH_SHORT).show()
         } else
             Toast.makeText(requireContext(), "حدث خطأ", Toast.LENGTH_SHORT).show()
-        swip.isRefreshing = false
+        swipeLayout.isRefreshing = false
     }
 
     private fun handleData(videos: List<Video>?) {
         spVideos?.visibility = View.GONE
         videos?.let {
             recyclerViewAdapter.submitList(mapMoves(videos))
+            rvItems.scheduleLayoutAnimation()
         }
+
+        rvItems.scheduleLayoutAnimation()
     }
 
     private fun mapMoves(videos: List<Video>): List<VideoListItem>? {

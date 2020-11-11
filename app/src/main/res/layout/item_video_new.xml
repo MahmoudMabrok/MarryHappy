@@ -47,7 +47,7 @@
             app:layout_constraintEnd_toStartOf="@+id/glHalfRow"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            tools:src="@mipmap/ic_launcher" />
+            android:contentDescription="@string/image" />
 
         <TextView
             android:id="@+id/tvCount"

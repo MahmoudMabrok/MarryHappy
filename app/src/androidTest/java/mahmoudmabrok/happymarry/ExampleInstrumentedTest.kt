@@ -1,3 +1,5 @@
+@file:Suppress("SpellCheckingInspection")
+
 package mahmoudmabrok.happymarry
 
 import androidx.test.ext.junit.runners.AndroidJUnit4

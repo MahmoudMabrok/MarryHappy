@@ -14,10 +14,6 @@
         <!-- Customize your theme here. -->
     </style>
 
-    <style name="tab">
-        <item name="fontFamily">@font/ge_medium</item>
-    </style>
-
     <style name="frame" parent="TextAppearance.Design.CollapsingToolbar.Expanded">
         <item name="fontFamily">@font/ge_bold</item>
         <item name="color">@color/white</item>

@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
 
-val retrofit by lazy {
+val retrofit: Retrofit by lazy {
     Retrofit.Builder()
         .baseUrl("https://marriyapp.firebaseio.com/")
         .addConverterFactory(GsonConverterFactory.create(Gson()))
@@ -14,6 +14,6 @@ val retrofit by lazy {
         .build()
 }
 
-val appService by lazy {
+val appService: AppService by lazy {
     retrofit.create(AppService::class.java)
 }

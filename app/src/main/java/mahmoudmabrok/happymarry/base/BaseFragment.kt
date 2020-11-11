@@ -7,7 +7,6 @@ import io.reactivex.disposables.CompositeDisposable
 import mahmoudmabrok.happymarry.R
 
 abstract class BaseFragment(layoutID: Int) : Fragment(layoutID) {
-    val mTag = this::class.java.simpleName
 
     val bag = CompositeDisposable()
 
@@ -22,12 +21,8 @@ abstract class BaseFragment(layoutID: Int) : Fragment(layoutID) {
     open fun loadData() {}
 
     open fun show(fragment: Fragment) {
-        activity?.supportFragmentManager?.let {
-            it.beginTransaction()
-                .add(R.id.mainContainer, fragment)
-                .addToBackStack(null)
-                .commit()
-        }
+        activity?.supportFragmentManager?.beginTransaction()?.add(R.id.mainContainer, fragment)
+            ?.addToBackStack(null)?.commit()
 
     }
 

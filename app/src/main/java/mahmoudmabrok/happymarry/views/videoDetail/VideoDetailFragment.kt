@@ -14,13 +14,13 @@ import mahmoudmabrok.happymarry.dataLayer.models.Video
 import mahmoudmabrok.happymarry.util.Logger
 import mahmoudmabrok.happymarry.util.getID
 import mahmoudmabrok.happymarry.viewholders.VideoDetailVH2
-import mahmoudmabrok.happymarry.viewmodels.VideoListViewmodel
+import mahmoudmabrok.happymarry.viewmodels.VideoListViewModel
 import me.ibrahimyilmaz.kiel.adapterOf
 
 
 class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
 
-    private val model by activityViewModels<VideoListViewmodel>()
+    private val model by activityViewModels<VideoListViewModel>()
 
     private val adapter = adapterOf<Video> {
         register(
@@ -55,7 +55,7 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
 
     override fun initViews() {
         rvItems?.adapter = adapter
-        adapter.submitList(model.lsitintem?.items)
+        adapter.submitList(model.listItem?.items)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
         exitTransition = MaterialFadeThrough()
     }

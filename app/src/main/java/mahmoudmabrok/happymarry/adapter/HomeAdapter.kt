@@ -11,9 +11,9 @@ import mahmoudmabrok.happymarry.views.videos.VideosListFragment
 class HomeAdapter(private val context: Context, fm: FragmentManager) :
     FragmentPagerAdapter(fm, BEHAVIOR_RESUME_ONLY_CURRENT_FRAGMENT) {
 
-    private val TAB_TITLES = arrayOf(
+    private val titles = arrayOf(
         R.string.videos,
-        R.string.articls
+        R.string.articles
     )
 
     override fun getItem(position: Int): Fragment {
@@ -24,7 +24,7 @@ class HomeAdapter(private val context: Context, fm: FragmentManager) :
     }
 
     override fun getPageTitle(position: Int): CharSequence? {
-        return context.resources.getString(TAB_TITLES[position])
+        return context.resources.getString(titles[position])
     }
 
     override fun getCount(): Int {

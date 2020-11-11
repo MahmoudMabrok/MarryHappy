@@ -18,7 +18,7 @@ class VideoDetailVH2(view: View) : RecyclerViewHolder<Video>(view) {
         cueVideo()
     }
 
-    fun cueVideo() {
+    private fun cueVideo() {
         val newUrl = data?.url?.getID() ?: ""
         Logger.log("VideoDetailVH2 cueVideo: $newUrl")
         player?.cueVideo(newUrl, 0f)

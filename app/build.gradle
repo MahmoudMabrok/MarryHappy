@@ -7,21 +7,21 @@ plugins {
 }
 
 android {
-    compileSdkVersion 30
-    buildToolsVersion "30.0.2"
+    compileSdkVersion 29
 
     defaultConfig {
         applicationId "mahmoudmabrok.happymarry"
         minSdkVersion 21
-        targetSdkVersion 30
-        versionCode 10
+        //noinspection OldTargetApi
+        targetSdkVersion 29
+        versionCode 11
         versionName "1.1.4"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            minifyEnabled true
+            minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
@@ -36,6 +36,7 @@ android {
 
 dependencies {
 
+    //noinspection GradleDependency
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
 
     //ktx android
@@ -45,7 +46,7 @@ dependencies {
 
     implementation 'androidx.appcompat:appcompat:1.2.0'
     implementation 'com.google.android.material:material:1.2.1'
-    implementation 'androidx.constraintlayout:constraintlayout:2.0.3'
+    implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
     implementation 'androidx.legacy:legacy-support-v4:1.0.0'
     testImplementation 'junit:junit:4.13.1'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
@@ -57,7 +58,8 @@ dependencies {
     implementation "com.squareup.retrofit2:retrofit:2.7.0"
     implementation "com.squareup.retrofit2:converter-gson:2.7.0"
     implementation "com.jakewharton.retrofit:retrofit2-rxjava2-adapter:1.0.0"
-    // Gson
+
+
     implementation 'com.google.code.gson:gson:2.8.6'
     implementation "com.squareup.okhttp3:logging-interceptor:4.8.1"
 

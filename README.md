@@ -1,6 +1,6 @@
 # MarryHappy 
 <img src="https://user-images.githubusercontent.com/13488900/97722275-240a2b80-1ad3-11eb-8ca0-88526c5c2d75.png" width="100">
-Android App to list reources for Islamic Marry.
+Android App to list resources for Islamic Marry.
 
 # Screenshots
 
@@ -15,4 +15,4 @@ Android App to list reources for Islamic Marry.
 
 
 # Apk 
-[Click To downloaad](https://bit.ly/32jn8QW)
+[Click To download](https://bit.ly/32jn8QW)

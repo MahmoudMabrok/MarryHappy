@@ -2,12 +2,11 @@ package mahmoudmabrok.happymarry.views.non_video
 
 import android.view.View
 import android.widget.Toast
-import androidx.fragment.app.activityViewModels
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_articles_list.*
 import kotlinx.android.synthetic.main.fragment_articles_list.rvItems
-import kotlinx.android.synthetic.main.fragment_articles_list.swip
+import kotlinx.android.synthetic.main.fragment_articles_list.swipeLayout
 import kotlinx.android.synthetic.main.fragment_movies_list.*
 import mahmoudmabrok.happymarry.R
 import mahmoudmabrok.happymarry.base.BaseFragment
@@ -17,12 +16,10 @@ import mahmoudmabrok.happymarry.dataLayer.models.NonVideosResponse
 import mahmoudmabrok.happymarry.util.IntentHelper
 import mahmoudmabrok.happymarry.util.Logger
 import mahmoudmabrok.happymarry.viewholders.NonVideoVH
-import mahmoudmabrok.happymarry.viewmodels.VideoListViewmodel
 import me.ibrahimyilmaz.kiel.adapterOf
 
 class NonVideoListFragment : BaseFragment(R.layout.fragment_articles_list) {
 
-    private val model by activityViewModels<VideoListViewmodel>()
     private val adapter = adapterOf<NonVideo> {
         register(
             layoutResource = R.layout.item_non_video,
@@ -43,8 +40,8 @@ class NonVideoListFragment : BaseFragment(R.layout.fragment_articles_list) {
 
     override fun initViews() {
         rvItems?.adapter = adapter
-        swip.setOnRefreshListener {
-            if (swip.isRefreshing)
+        swipeLayout.setOnRefreshListener {
+            if (swipeLayout.isRefreshing)
                 loadData()
         }
 
@@ -60,7 +57,7 @@ class NonVideoListFragment : BaseFragment(R.layout.fragment_articles_list) {
                 Logger.log("data ${it.size}")
                 handleData(it)
                 spLoading.visibility = View.GONE
-                swip.isRefreshing = false
+                swipeLayout.isRefreshing = false
             }, {
                 Logger.log("Error ${it.message}")
                 handleError(it.message)
@@ -77,12 +74,13 @@ class NonVideoListFragment : BaseFragment(R.layout.fragment_articles_list) {
             Toast.makeText(requireContext(), "تاكد من اتصالك بالانترنت", Toast.LENGTH_SHORT).show()
         } else
             Toast.makeText(requireContext(), "حدث خطأ", Toast.LENGTH_SHORT).show()
-        swip.isRefreshing = false
+        swipeLayout.isRefreshing = false
     }
 
     private fun handleData(it: NonVideosResponse?) {
         it?.let {
             adapter.submitList(it)
+            rvItems?.scheduleLayoutAnimation()
         }
     }
 }
