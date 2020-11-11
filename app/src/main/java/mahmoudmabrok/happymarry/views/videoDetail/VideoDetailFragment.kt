@@ -31,8 +31,8 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
                     viewLifecycleOwner.lifecycle.addObserver(vh.itemView.youtube_player_view)
                     vh.itemView.youtube_player_view.addYouTubePlayerListener(object :
                         AbstractYouTubePlayerListener() {
-                        override fun onReady(initializedYouTubePlayer: YouTubePlayer) {
-                            vh.player = initializedYouTubePlayer
+                        override fun onReady(youTubePlayer: YouTubePlayer) {
+                            vh.player = youTubePlayer
                             val newUrl = vh.data?.url?.getID() ?: ""
                             vh.player?.cueVideo(newUrl, 0f)
                         }

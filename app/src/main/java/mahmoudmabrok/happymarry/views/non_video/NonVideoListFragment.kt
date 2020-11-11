@@ -30,7 +30,7 @@ class NonVideoListFragment : BaseFragment(R.layout.fragment_articles_list) {
                     IntentHelper.openUrl(requireContext(), vh.data?.url)
                 }
             },
-            onBindViewHolder = { vh: NonVideoVH, pos: Int, p: NonVideo ->
+            onBindViewHolder = { vh: NonVideoVH, _: Int, p: NonVideo ->
                 vh.bind(p)
             }
         )
