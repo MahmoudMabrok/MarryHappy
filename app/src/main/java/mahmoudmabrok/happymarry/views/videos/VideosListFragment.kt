@@ -2,7 +2,6 @@ package mahmoudmabrok.happymarry.views.videos
 
 
 import android.view.View
-import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -12,7 +11,6 @@ import mahmoudmabrok.happymarry.base.BaseFragment
 import mahmoudmabrok.happymarry.dataLayer.AppRepo
 import mahmoudmabrok.happymarry.dataLayer.models.Video
 import mahmoudmabrok.happymarry.dataLayer.models.VideoListItem
-import mahmoudmabrok.happymarry.util.Logger
 import mahmoudmabrok.happymarry.viewholders.VideoVH
 import mahmoudmabrok.happymarry.viewmodels.VideoListViewModel
 import mahmoudmabrok.happymarry.views.videoDetail.VideoDetailFragment
@@ -56,11 +54,11 @@ class VideosListFragment : BaseFragment(R.layout.fragment_movies_list) {
     override fun loadData() {
         recyclerViewAdapter.submitList(emptyList())
         spVideos.visibility = View.VISIBLE
+        swipeLayout.isRefreshing = false
         repo.loadVideos()
             .subscribeOn(Schedulers.io())
             .observeOn(AndroidSchedulers.mainThread())
             .subscribe({
-                swipeLayout.isRefreshing = false
                 handleData(it)
             }, {
                 handleError(it.message)
@@ -70,15 +68,12 @@ class VideosListFragment : BaseFragment(R.layout.fragment_movies_list) {
             }
     }
 
-    private fun handleError(message: String?) {
-        Logger.log("Error $message")
+    override fun handleError(message: String?) {
+        super.handleError(message)
         spVideos.visibility = View.GONE
-        if (message?.contains("resolve") == true) {
-            Toast.makeText(requireContext(), "تاكد من اتصالك بالانترنت", Toast.LENGTH_SHORT).show()
-        } else
-            Toast.makeText(requireContext(), "حدث خطأ", Toast.LENGTH_SHORT).show()
         swipeLayout.isRefreshing = false
     }
+
 
     private fun handleData(videos: List<Video>?) {
         spVideos?.visibility = View.GONE

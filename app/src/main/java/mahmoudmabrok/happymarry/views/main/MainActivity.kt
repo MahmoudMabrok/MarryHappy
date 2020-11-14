@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import kotlinx.android.synthetic.main.activity_main.*
 import mahmoudmabrok.happymarry.R
 import mahmoudmabrok.happymarry.adapter.HomeAdapter
+import mahmoudmabrok.happymarry.util.UpdateHelper
 
 class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -18,5 +19,9 @@ class MainActivity : AppCompatActivity() {
         val adapter = HomeAdapter(this, supportFragmentManager)
         vpHome?.adapter = adapter
         tabs.setupWithViewPager(vpHome)
+        UpdateHelper.checkUpdates(this)
+        vpHome.offscreenPageLimit = 0
+
     }
+
 }
