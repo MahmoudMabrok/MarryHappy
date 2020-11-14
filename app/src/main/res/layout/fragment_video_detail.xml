@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,14 +7,35 @@
     android:background="@drawable/main_bg"
     android:clickable="true"
     android:focusable="true"
-    android:padding="16dp"
+    android:layoutDirection="rtl"
+    android:orientation="vertical"
     tools:context=".views.videoDetail.VideoDetailFragment">
+
+    <com.google.android.exoplayer2.ui.PlayerView
+        android:id="@+id/pvVideoDetail"
+        android:layout_width="match_parent"
+        android:layout_height="250dp"
+        app:resize_mode="fill" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="8dp"
+        android:textAlignment="viewStart"
+        android:textColor="@color/white"
+        android:textSize="16sp"
+        android:visibility="invisible"
+        tools:text="sasas" />
+
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvItems"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
-</FrameLayout>
+</LinearLayout>

@@ -1,13 +1,9 @@
 package mahmoudmabrok.happymarry.views.non_video
 
 import android.view.View
-import android.widget.Toast
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.fragment_articles_list.*
-import kotlinx.android.synthetic.main.fragment_articles_list.rvItems
-import kotlinx.android.synthetic.main.fragment_articles_list.swipeLayout
-import kotlinx.android.synthetic.main.fragment_movies_list.*
 import mahmoudmabrok.happymarry.R
 import mahmoudmabrok.happymarry.base.BaseFragment
 import mahmoudmabrok.happymarry.dataLayer.AppRepo
@@ -59,7 +55,7 @@ class NonVideoListFragment : BaseFragment(R.layout.fragment_articles_list) {
                 spLoading.visibility = View.GONE
                 swipeLayout.isRefreshing = false
             }, {
-                Logger.log("Error ${it.message}")
+                Logger.log("NOn Video Error ${it.message}")
                 handleError(it.message)
             })
             .also {
@@ -67,13 +63,9 @@ class NonVideoListFragment : BaseFragment(R.layout.fragment_articles_list) {
             }
     }
 
-    private fun handleError(message: String?) {
-        Logger.log("Error $message")
-        spVideos.visibility = View.GONE
-        if (message?.contains("resolve") == true) {
-            Toast.makeText(requireContext(), "تاكد من اتصالك بالانترنت", Toast.LENGTH_SHORT).show()
-        } else
-            Toast.makeText(requireContext(), "حدث خطأ", Toast.LENGTH_SHORT).show()
+    override fun handleError(message: String?) {
+        super.handleError(message)
+        spLoading?.visibility = View.GONE
         swipeLayout.isRefreshing = false
     }
 

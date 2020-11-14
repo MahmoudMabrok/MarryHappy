@@ -1,18 +1,20 @@
 package mahmoudmabrok.happymarry.views.videoDetail
 
+import android.annotation.SuppressLint
+import android.util.SparseArray
+import androidx.core.util.isNotEmpty
 import androidx.fragment.app.activityViewModels
+import at.huber.youtubeExtractor.VideoMeta
+import at.huber.youtubeExtractor.YouTubeExtractor
+import at.huber.youtubeExtractor.YtFile
 import com.google.android.material.transition.MaterialFadeThrough
 import com.google.android.material.transition.MaterialSharedAxis
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.PlayerConstants
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.YouTubePlayer
-import com.pierfrancescosoffritti.androidyoutubeplayer.core.player.listeners.AbstractYouTubePlayerListener
 import kotlinx.android.synthetic.main.fragment_video_detail.*
-import kotlinx.android.synthetic.main.rv_detail_video_item.view.*
 import mahmoudmabrok.happymarry.R
 import mahmoudmabrok.happymarry.base.BaseFragment
 import mahmoudmabrok.happymarry.dataLayer.models.Video
 import mahmoudmabrok.happymarry.util.Logger
-import mahmoudmabrok.happymarry.util.getID
+import mahmoudmabrok.happymarry.util.VideoController
 import mahmoudmabrok.happymarry.viewholders.VideoDetailVH2
 import mahmoudmabrok.happymarry.viewmodels.VideoListViewModel
 import me.ibrahimyilmaz.kiel.adapterOf
@@ -20,35 +22,29 @@ import me.ibrahimyilmaz.kiel.adapterOf
 
 class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
 
+    private val videoController by lazy { VideoController(pvVideoDetail) }
+
     private val model by activityViewModels<VideoListViewModel>()
+
+    private var index = 0
 
     private val adapter = adapterOf<Video> {
         register(
             layoutResource = R.layout.rv_detail_video_item,
             viewHolder = ::VideoDetailVH2,
             onViewHolderCreated = { vh ->
-                run {
-                    viewLifecycleOwner.lifecycle.addObserver(vh.itemView.youtube_player_view)
-                    vh.itemView.youtube_player_view.addYouTubePlayerListener(object :
-                        AbstractYouTubePlayerListener() {
-                        override fun onReady(youTubePlayer: YouTubePlayer) {
-                            vh.player = youTubePlayer
-                            val newUrl = vh.data?.url?.getID() ?: ""
-                            vh.player?.cueVideo(newUrl, 0f)
-                        }
-
-                        override fun onError(
-                            youTubePlayer: YouTubePlayer,
-                            error: PlayerConstants.PlayerError
-                        ) {
-                            super.onError(youTubePlayer, error)
-                            Logger.log("VideoDetailFragment onError: ${error.name}  $error")
-                        }
-                    })
+                Logger.log("onViewHolderCreated : ")
+                vh.itemView.setOnClickListener {
+                    Logger.log("VideoDetailFragment : aa ${vh.absoluteAdapterPosition}")
+                    playItem(vh.data, vh.absoluteAdapterPosition)
                 }
             },
             onBindViewHolder = { vh: VideoDetailVH2, pos: Int, p: Video ->
+                p.isSelected = pos == index
+
                 vh.bind(p)
+
+                Logger.log("VideoDetailFragment onBindViewHolder : pos $pos index $index item $p")
             }
         )
     }
@@ -58,5 +54,39 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
         adapter.submitList(model.listItem?.items)
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
         exitTransition = MaterialFadeThrough()
+
+        playItem(model.listItem?.items?.firstOrNull(), 0)
+    }
+
+    @SuppressLint("StaticFieldLeak")
+    private fun playItem(video: Video?, index: Int) {
+        title?.text = video?.name
+        val items = model.listItem?.items ?: emptyList()
+        this.index = index
+        Logger.log("VideoDetailFragment playItem: index$index")
+        //     adapter.submitList(emptyList())
+
+        adapter.notifyItemRangeChanged(0, items.size)
+
+        object : YouTubeExtractor(requireContext()) {
+            override fun onExtractionComplete(
+                ytFiles: SparseArray<YtFile>,
+                vMeta: VideoMeta
+            ) {
+                if (ytFiles.isNotEmpty()) {
+                    videoController.releasePlayer()
+                    val downloadUrl = ytFiles.valueAt(0).url
+                    context?.let {
+                        videoController.initializePlayer(requireContext(), downloadUrl)
+                    }
+
+                }
+            }
+        }.extract(video?.url, true, true)
+    }
+
+    override fun onDestroyView() {
+        videoController.releasePlayer()
+        super.onDestroyView()
     }
 }
