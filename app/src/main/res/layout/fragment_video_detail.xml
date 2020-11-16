@@ -25,7 +25,7 @@
         android:textAlignment="viewStart"
         android:textColor="@color/white"
         android:textSize="16sp"
-        android:visibility="invisible"
+        android:visibility="gone"
         tools:text="sasas" />
 
 
@@ -36,6 +36,7 @@
         android:orientation="vertical"
         android:paddingStart="8dp"
         android:paddingEnd="8dp"
+        android:layout_marginTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager" />
 
 </LinearLayout>

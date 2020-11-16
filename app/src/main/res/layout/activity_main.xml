@@ -19,9 +19,8 @@
         app:layout_scrollFlags="scroll|enterAlways"
         app:tabGravity="fill"
         app:tabIndicatorColor="#E37717"
-        app:tabIndicatorGravity="stretch"
+        app:tabIndicatorGravity="bottom"
         app:tabIndicatorHeight="4dp"
-        app:tabSelectedTextColor="@color/white"
         app:tabTextAppearance="@style/frame"
         app:tabTextColor="#121211" />
 
