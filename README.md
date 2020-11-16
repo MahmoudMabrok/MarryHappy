@@ -2,6 +2,10 @@
 <img src="https://user-images.githubusercontent.com/13488900/97722275-240a2b80-1ad3-11eb-8ca0-88526c5c2d75.png" width="100">
 Android App to list resources for Islamic Marry.
 
+# Demo 
+![ezgif com-video-to-gif](https://user-images.githubusercontent.com/13488900/99306097-5a7ad100-285d-11eb-8b20-6759fc15cb30.gif)
+
+
 # Screenshots
 
 <div>
