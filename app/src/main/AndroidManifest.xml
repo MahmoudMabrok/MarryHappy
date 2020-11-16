@@ -4,9 +4,7 @@
     package="mahmoudmabrok.happymarry">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-feature
-        android:name="android.hardware.sensor.accelerometer"
-        android:required="true" />
+
 
     <application
         android:allowBackup="false"
