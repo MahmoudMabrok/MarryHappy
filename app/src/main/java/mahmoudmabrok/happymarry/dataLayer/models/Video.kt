@@ -3,6 +3,7 @@ package mahmoudmabrok.happymarry.dataLayer.models
 
 import com.google.gson.annotations.SerializedName
 
+
 data class Video(
     @SerializedName("group")
     val group: String? = null,
