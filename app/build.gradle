@@ -13,8 +13,8 @@ android {
         applicationId "mahmoudmabrok.happymarry"
         minSdkVersion 21
         targetSdkVersion 30
-        versionCode 16
-        versionName "1.0"
+        versionCode 17
+        versionName "1.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 

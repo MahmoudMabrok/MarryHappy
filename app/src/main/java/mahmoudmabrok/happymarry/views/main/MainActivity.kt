@@ -2,6 +2,7 @@ package mahmoudmabrok.happymarry.views.main
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.tabs.TabLayoutMediator
 import kotlinx.android.synthetic.main.activity_main.*
 import mahmoudmabrok.happymarry.R
 import mahmoudmabrok.happymarry.adapter.HomeAdapter
@@ -16,11 +17,21 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupBody() {
-        val adapter = HomeAdapter(this, supportFragmentManager)
+        val adapter = HomeAdapter(this)
         vpHome?.adapter = adapter
-        tabs.setupWithViewPager(vpHome)
+
+        val titles = arrayOf(
+            R.string.videos,
+            R.string.articles
+        )
+
+
+        TabLayoutMediator(tabs, vpHome) { tab, position ->
+            tab.text = getString(titles[position])
+        }.attach()
+
+
         UpdateHelper.checkUpdates(this)
-        vpHome.offscreenPageLimit = 0
 
     }
 

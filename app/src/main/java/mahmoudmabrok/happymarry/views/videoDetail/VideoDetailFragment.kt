@@ -75,7 +75,7 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
             ) {
                 if (ytFiles.isNotEmpty()) {
                     videoController.releasePlayer()
-                    val downloadUrl = ytFiles.valueAt(0).url
+                    val downloadUrl = ytFiles[18]?.url ?: ytFiles[133]?.url
                     context?.let {
                         videoController.initializePlayer(requireContext(), downloadUrl)
                     }
