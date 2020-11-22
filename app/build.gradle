@@ -10,7 +10,7 @@ android {
     compileSdkVersion 30
 
     defaultConfig {
-        applicationId "mahmoudmabrok.happymarry"
+        applicationId "edu.mahmoud_mabrouk.happy_marry"
         minSdkVersion 21
         targetSdkVersion 30
         versionCode 16

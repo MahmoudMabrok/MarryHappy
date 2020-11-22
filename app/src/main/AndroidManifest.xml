@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    package="mahmoudmabrok.happymarry">
+    package="edu.mahmoud_mabrouk.happy_marry">
 
     <uses-permission android:name="android.permission.INTERNET" />
 
@@ -16,13 +16,13 @@
         android:theme="@style/Theme.HappyMarry"
         android:usesCleartextTraffic="true"
         tools:targetApi="m">
-        <activity android:name=".views.splash.SplashActivity">
+        <activity android:name="mahmoudmabrok.happy_marry.views.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".views.main.MainActivity" />
+        <activity android:name="mahmoudmabrok.happy_marry.views.main.MainActivity" />
 
     </application>
 
