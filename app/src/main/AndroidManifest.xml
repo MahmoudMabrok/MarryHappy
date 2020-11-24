@@ -3,10 +3,19 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="mahmoudmabrok.happymarry">
 
+    <uses-feature
+        android:name="android.software.leanback"
+        android:required="false" />
+
+    <uses-feature
+        android:name="android.hardware.touchscreen"
+        android:required="false" />
+
     <uses-permission android:name="android.permission.INTERNET" />
 
 
     <application
+        android:name=".util.App"
         android:allowBackup="false"
         tools:replace="allowBackup"
         android:icon="@mipmap/ic_launcher"
@@ -15,10 +24,14 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.HappyMarry"
         android:usesCleartextTraffic="true"
+        android:banner="@mipmap/ic_launcher"
         tools:targetApi="m">
+
         <activity android:name=".views.splash.SplashActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LEANBACK_LAUNCHER" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>

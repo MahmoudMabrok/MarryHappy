@@ -1,9 +1,10 @@
 <resources>
-    <string name="app_name">HappyMarry</string>
+    <string name="app_name">البيت المسلم</string>
     <string name="videos">فيديوهات</string>
     <string name="articles">منوعات</string>
-    <!-- TODO: Remove or change this placeholder text -->
     <string name="splash_text">من أجل عفاف اجتماعى</string>
     <string name="image">image</string>
     <string name="dummyLong">مجلس فقه المناكحات على مذهب الإمام الشافعي رضي الله عنه | الشيخ أنس السلطان | ربيع 2019</string>
+
+
 </resources>

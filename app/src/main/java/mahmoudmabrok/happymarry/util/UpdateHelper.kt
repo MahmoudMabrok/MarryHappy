@@ -11,7 +11,8 @@ import com.google.android.play.core.install.model.UpdateAvailability
 import com.google.android.play.core.tasks.Task
 
 object UpdateHelper {
-    const val UPDATE_CODE = 10001
+
+    private const val UPDATE_CODE = 10001
 
     fun checkUpdates(ctx: Context) {
         val updateManager = AppUpdateManagerFactory.create(ctx)

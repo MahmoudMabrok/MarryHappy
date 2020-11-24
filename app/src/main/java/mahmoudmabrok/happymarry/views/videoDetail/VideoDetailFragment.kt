@@ -64,7 +64,7 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
         val items = model.listItem?.items ?: emptyList()
         this.index = index
         Logger.log("VideoDetailFragment playItem: index$index")
-        //     adapter.submitList(emptyList())
+
 
         adapter.notifyItemRangeChanged(0, items.size)
 
@@ -75,11 +75,14 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
             ) {
                 if (ytFiles.isNotEmpty()) {
                     videoController.releasePlayer()
-                    val downloadUrl = ytFiles[18]?.url ?: ytFiles[133]?.url
-                    context?.let {
-                        videoController.initializePlayer(requireContext(), downloadUrl)
+                    val downloadUrl =
+                        ytFiles[18]?.url ?: ytFiles[133]?.url ?: ytFiles.valueAt(0).url
+                    downloadUrl?.let {
+                        context?.let {
+                            if (isResumed)
+                                videoController.initializePlayer(it, downloadUrl)
+                        }
                     }
-
                 }
             }
         }.extract(video?.url, true, true)
