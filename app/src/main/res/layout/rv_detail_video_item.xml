@@ -5,9 +5,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="8dp"
-    android:minHeight="48dp"
     android:clipToPadding="false"
     android:layoutDirection="rtl"
+    android:minHeight="48dp"
     android:padding="4dp"
     app:cardCornerRadius="12dp"
     app:cardElevation="4dp">
@@ -22,20 +22,46 @@
 
         <TextView
             android:id="@+id/tvTitle"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_marginTop="8dp"
             android:fontFamily="@font/ge_medium"
             android:letterSpacing="0.1"
             android:paddingStart="8dp"
             android:textAlignment="viewStart"
-            android:textSize="14sp"
             android:textColor="@color/black"
+            android:textSize="14sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="RtlSymmetry"
             tools:text="دورة" />
+
+        <TextView
+            android:id="@+id/tvDuration"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:drawablePadding="10dp"
+            android:visibility="gone"
+            app:drawableEndCompat="@drawable/ic_time"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            tools:text="10 m" />
+
+        <TextView
+            android:id="@+id/tvViews"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="4dp"
+            android:layout_marginEnd="10dp"
+            android:drawablePadding="10dp"
+            android:visibility="gone"
+            app:drawableEndCompat="@drawable/ic_seen"
+            app:layout_constraintEnd_toStartOf="@id/tvDuration"
+            app:layout_constraintTop_toBottomOf="@+id/tvTitle"
+            tools:text="10 m" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

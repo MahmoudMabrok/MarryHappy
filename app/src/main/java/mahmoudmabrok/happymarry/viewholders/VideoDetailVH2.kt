@@ -20,5 +20,17 @@ class VideoDetailVH2(view: View) : RecyclerViewHolder<Video>(view) {
 
         Logger.log("VideoDetailVH2 bind: $item")
 
+        // check to show/hide extra info fields
+        val othersVisibility = if (item.lengthTime.isNullOrEmpty()) View.GONE else View.VISIBLE
+        itemView.tvDuration.visibility = othersVisibility
+        itemView.tvViews.visibility = othersVisibility
+        updateExtra()
+
+    }
+
+    fun updateExtra() {
+        // add data
+        itemView.tvDuration.text = data?.lengthTime?.padStart(15, ' ')
+        itemView.tvViews.text = data?.views
     }
 }

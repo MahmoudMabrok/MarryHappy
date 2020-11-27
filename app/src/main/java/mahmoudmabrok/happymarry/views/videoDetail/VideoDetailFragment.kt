@@ -2,6 +2,7 @@ package mahmoudmabrok.happymarry.views.videoDetail
 
 import android.annotation.SuppressLint
 import android.util.SparseArray
+import androidx.core.util.forEach
 import androidx.core.util.isNotEmpty
 import androidx.fragment.app.activityViewModels
 import at.huber.youtubeExtractor.VideoMeta
@@ -14,6 +15,7 @@ import mahmoudmabrok.happymarry.R
 import mahmoudmabrok.happymarry.base.BaseFragment
 import mahmoudmabrok.happymarry.dataLayer.models.Video
 import mahmoudmabrok.happymarry.util.Logger
+import mahmoudmabrok.happymarry.util.ValueHelpers
 import mahmoudmabrok.happymarry.util.VideoController
 import mahmoudmabrok.happymarry.viewholders.VideoDetailVH2
 import mahmoudmabrok.happymarry.viewmodels.VideoListViewModel
@@ -22,11 +24,13 @@ import me.ibrahimyilmaz.kiel.adapterOf
 
 class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
 
+    private val qualityItems: MutableList<VideoDetailFragment.Play> = mutableListOf()
     private val videoController by lazy { VideoController(pvVideoDetail) }
 
     private val model by activityViewModels<VideoListViewModel>()
 
     private var index = 0
+    private var qualityIndex = 0
 
     private val adapter = adapterOf<Video> {
         register(
@@ -55,12 +59,25 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
         enterTransition = MaterialSharedAxis(MaterialSharedAxis.Z, true)
         exitTransition = MaterialFadeThrough()
 
+        // start play first item in list
         playItem(model.listItem?.items?.firstOrNull(), 0)
+
+
+        quality?.setOnClickListener {
+            // go to next qulaity
+            qualityIndex += 1
+            // modulo (round around values . i.e 0,1,2,0,1 etc)
+            qualityIndex %= qualityItems.size
+            quality.text = "${qualityItems[qualityIndex].title}"
+            videoController.releasePlayer()
+            videoController.initializePlayer(requireContext(), qualityItems[qualityIndex].url)
+
+        }
     }
 
     @SuppressLint("StaticFieldLeak")
     private fun playItem(video: Video?, index: Int) {
-        title?.text = video?.name
+        // title?.text = video?.name
         val items = model.listItem?.items ?: emptyList()
         this.index = index
         Logger.log("VideoDetailFragment playItem: index$index")
@@ -75,20 +92,60 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
             ) {
                 if (ytFiles.isNotEmpty()) {
                     videoController.releasePlayer()
-                    val downloadUrl =
-                        ytFiles[18]?.url ?: ytFiles[133]?.url ?: ytFiles.valueAt(0).url
+                    val ytSelected = ytFiles[18] ?: ytFiles[133] ?: ytFiles.valueAt(0)
+                    val downloadUrl = ytSelected?.url
                     downloadUrl?.let {
                         context?.let {
+                            quality.text = "${ytSelected.format.height} ${ytSelected.format.ext}"
                             if (isResumed)
                                 videoController.initializePlayer(it, downloadUrl)
                         }
                     }
+                    // convert them[extracted data ] into models to used in UI as user change quality
+                    handleYt(ytFiles)
+                    // update video with video length and views count
+                    updateCurrentItemWithInfo(vMeta.videoLength, vMeta.viewCount)
                 }
             }
-        }.extract(video?.url, true, true)
+        }.extract(video?.url, false, true)
+    }
+
+    data class Play(val title: String, val url: String)
+
+    private fun handleYt(ytFiles: SparseArray<YtFile>) {
+        qualityItems.clear()
+        var audiAdded = false
+        ytFiles.forEach { key, value ->
+            if (value.format.audioBitrate > 0) {
+                if (value.format.height == -1) {
+                    // accept only first only first audio only item
+                    if (!audiAdded) {
+                        qualityItems.add(
+                            Play(
+                                getString(R.string.audio_only),
+                                value.url
+                            )
+                        )
+                        audiAdded = true
+                    }
+                } else {
+                    qualityItems.add(Play("${value.format.height} ${value.format.ext}", value.url))
+                }
+            }
+        }
+    }
+
+    private fun updateCurrentItemWithInfo(videoLength: Long, viewCount: Long) {
+        val length = ValueHelpers.formatTime(videoLength)
+        (rvItems.findViewHolderForAdapterPosition(index) as? VideoDetailVH2)?.let {
+            it.data?.lengthTime = length
+            it.data?.views = "$viewCount"
+            adapter.notifyItemChanged(index)
+        }
     }
 
     override fun onDestroyView() {
+        model.listItem = null
         videoController.releasePlayer()
         super.onDestroyView()
     }

@@ -5,6 +5,7 @@
     <string name="splash_text">من أجل عفاف اجتماعى</string>
     <string name="image">image</string>
     <string name="dummyLong">مجلس فقه المناكحات على مذهب الإمام الشافعي رضي الله عنه | الشيخ أنس السلطان | ربيع 2019</string>
+    <string name="audio_only">صوت فقط</string>
 
 
 </resources>
