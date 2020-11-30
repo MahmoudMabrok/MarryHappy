@@ -24,13 +24,16 @@ import me.ibrahimyilmaz.kiel.adapterOf
 
 class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
 
-    private val qualityItems: MutableList<VideoDetailFragment.Play> = mutableListOf()
+    private val qualityItems: MutableList<Play> = mutableListOf()
     private val videoController by lazy { VideoController(pvVideoDetail) }
 
     private val model by activityViewModels<VideoListViewModel>()
 
     private var index = 0
     private var qualityIndex = 0
+
+    private var rateIndex = 0
+    private val rates by lazy { listOf(1.0, 1.25, 1.5, 1.6, 1.75, 2.0) }
 
     private val adapter = adapterOf<Video> {
         register(
@@ -45,9 +48,7 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
             },
             onBindViewHolder = { vh: VideoDetailVH2, pos: Int, p: Video ->
                 p.isSelected = pos == index
-
                 vh.bind(p)
-
                 Logger.log("VideoDetailFragment onBindViewHolder : pos $pos index $index item $p")
             }
         )
@@ -62,7 +63,6 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
         // start play first item in list
         playItem(model.listItem?.items?.firstOrNull(), 0)
 
-
         quality?.setOnClickListener {
             // go to next qulaity
             qualityIndex += 1
@@ -71,8 +71,18 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
             quality.text = "${qualityItems[qualityIndex].title}"
             videoController.releasePlayer()
             videoController.initializePlayer(requireContext(), qualityItems[qualityIndex].url)
-
         }
+
+        btnRates?.setOnClickListener {
+            // go to next rate
+            rateIndex += 1
+            // modulo (round around values . i.e 0,1,2,0,1 etc)
+            rateIndex %= rates.size
+            btnRates.text = "${rates[rateIndex]} x"
+            videoController.changeRate(rates[rateIndex].toFloat())
+        }
+
+
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -80,6 +90,8 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
         // title?.text = video?.name
         val items = model.listItem?.items ?: emptyList()
         this.index = index
+        rateIndex = 0
+        btnRates.text = "${rates.getOrNull(rateIndex)} x"
         Logger.log("VideoDetailFragment playItem: index$index")
 
 
