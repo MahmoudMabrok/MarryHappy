@@ -19,5 +19,5 @@ Android App to list resources for Islamic Marry.
 
 
 # Apk 
-[Click To download](http://www.mediafire.com/file/4k7640zcitoqoeo/app-release.apk/file)
+[Click To download](https://play.google.com/store/apps/details?id=mahmoudmabrok.happymarry)
 
