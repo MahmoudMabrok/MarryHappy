@@ -24,7 +24,7 @@ import me.ibrahimyilmaz.kiel.adapterOf
 
 class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
 
-    private val qualityItems: MutableList<VideoDetailFragment.Play> = mutableListOf()
+    private val qualityItems: MutableList<Play> = mutableListOf()
     private val videoController by lazy { VideoController(pvVideoDetail) }
 
     private val model by activityViewModels<VideoListViewModel>()
@@ -48,9 +48,7 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
             },
             onBindViewHolder = { vh: VideoDetailVH2, pos: Int, p: Video ->
                 p.isSelected = pos == index
-
                 vh.bind(p)
-
                 Logger.log("VideoDetailFragment onBindViewHolder : pos $pos index $index item $p")
             }
         )
@@ -64,7 +62,6 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
 
         // start play first item in list
         playItem(model.listItem?.items?.firstOrNull(), 0)
-
 
         quality?.setOnClickListener {
             // go to next qulaity
