@@ -32,6 +32,9 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
     private var index = 0
     private var qualityIndex = 0
 
+    private var rateIndex = 0
+    private val rates by lazy { listOf(1.0, 1.25, 1.5, 1.6, 1.75, 2.0) }
+
     private val adapter = adapterOf<Video> {
         register(
             layoutResource = R.layout.rv_detail_video_item,
@@ -71,8 +74,18 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
             quality.text = "${qualityItems[qualityIndex].title}"
             videoController.releasePlayer()
             videoController.initializePlayer(requireContext(), qualityItems[qualityIndex].url)
-
         }
+
+        btnRates?.setOnClickListener {
+            // go to next rate
+            rateIndex += 1
+            // modulo (round around values . i.e 0,1,2,0,1 etc)
+            rateIndex %= rates.size
+            btnRates.text = "${rates[rateIndex]} x"
+            videoController.changeRate(rates[rateIndex].toFloat())
+        }
+
+
     }
 
     @SuppressLint("StaticFieldLeak")
@@ -80,6 +93,8 @@ class VideoDetailFragment : BaseFragment(R.layout.fragment_video_detail) {
         // title?.text = video?.name
         val items = model.listItem?.items ?: emptyList()
         this.index = index
+        rateIndex = 0
+        btnRates.text = "${rates.getOrNull(rateIndex)} x"
         Logger.log("VideoDetailFragment playItem: index$index")
 
 

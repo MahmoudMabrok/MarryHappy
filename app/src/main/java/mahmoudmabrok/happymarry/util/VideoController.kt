@@ -3,6 +3,7 @@ package mahmoudmabrok.happymarry.util
 import android.content.Context
 import android.net.Uri
 import com.google.android.exoplayer2.ExoPlayer
+import com.google.android.exoplayer2.PlaybackParameters
 import com.google.android.exoplayer2.SimpleExoPlayer
 import com.google.android.exoplayer2.source.MediaSource
 import com.google.android.exoplayer2.source.ProgressiveMediaSource
@@ -17,6 +18,7 @@ class VideoController(private val video_view: PlayerView) {
 
     var player: ExoPlayer? = null
 
+    var speed = 1.0f
 
     fun initializePlayer(ctx: Context, url: String?) {
         player = SimpleExoPlayer.Builder(ctx).build()
@@ -35,14 +37,20 @@ class VideoController(private val video_view: PlayerView) {
             .createMediaSource(uri)
     }
 
+    fun changeRate(rate: Float) {
+        speed = rate
+        player?.setPlaybackParameters(PlaybackParameters(rate))
+    }
+
     fun releasePlayer() {
-        if (player != null) {
-            playWhenReady = player!!.playWhenReady
-            playbackPosition = player!!.currentPosition
-            currentWindow = player!!.currentWindowIndex
-            player!!.release()
-            player = null
+        player?.let { player ->
+            playWhenReady = player.playWhenReady
+            playbackPosition = player.currentPosition
+            currentWindow = player.currentWindowIndex
+            player.release()
+            this.player = null
         }
+
     }
 
 }
